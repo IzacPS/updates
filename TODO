@@ -1,0 +1,14 @@
+ - Test with animation
+
+
+agents:                                               |----------- background 1
+           a1  -> dispatch listener -> build content -->
+                                                      |----------- background 2
+
+
+           a2  -> dispatch listener -> build content --> --------- background 1
+
+
+                                                      |----------- background 1
+           a3  -> dispatch listener -> build content --> --------- background 2
+                                                      |----------- background 3

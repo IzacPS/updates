@@ -2,7 +2,7 @@
 
 **Updates** é um pacote Flutter que implementa um componente visual no estilo das *bubbles* do Instagram, ideal para mostrar atualizações rápidas como stories, status ou posts em destaque.
 
-![Demonstração do Updates](images/output.gif)
+![Demonstração do Updates](https://github.com/IzacPS/updates/blob/main/images/output.gif)
 
 ## ✨ Recursos
 

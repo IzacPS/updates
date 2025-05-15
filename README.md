@@ -1,5 +1,9 @@
 # 🫧 Updates
 
+![Flutter](https://img.shields.io/badge/Made%20with-Flutter-blue)
+![License](https://img.shields.io/badge/license-MIT-green)
+![Status](https://img.shields.io/badge/status-100%25%20Funcional-success)
+
 **Updates** é um pacote Flutter que implementa um componente visual no estilo das *bubbles* do Instagram, ideal para mostrar atualizações rápidas como stories, status ou posts em destaque.
 
 ![Demonstração do Updates](https://github.com/IzacPS/updates/blob/main/images/output.gif)

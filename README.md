@@ -12,7 +12,7 @@
 
 - Bubbles com avatar, nome e indicador de status.
 - Comportamento visual com `background` (imagem) e `foreground` (nome ou overlay).
-- Suporte à paginação com `infinite_scroll_pagination`.
+- Suporte à paginação com `infinite_scroll_pagination` (não implementado completamente).
 - Visualização de múltiplos updates ao clicar em uma bubble.
 
 ## 📦 Instalação

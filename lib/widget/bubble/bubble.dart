@@ -8,7 +8,7 @@ class Bubble<A> extends StatelessWidget {
     required void Function(int index) onTap,
     required double size,
     required double height,
-    required Color Function(BuildContext context, A? item) statusColorBuilder,
+    BoxBorder? Function(BuildContext context, A? item)? statusColorBuilder,
     required Widget Function(BuildContext context, A? item) avatarBuilder,
     required Widget Function(BuildContext context, A? item) descriptionBuilder,
   })  : _index = index,
@@ -26,7 +26,7 @@ class Bubble<A> extends StatelessWidget {
   final double _size;
   final double _height;
 
-  final Color Function(BuildContext context, A? item) _statusColorBuilder;
+  final BoxBorder? Function(BuildContext context, A? item)? _statusColorBuilder;
   final Widget Function(BuildContext context, A? item) _avatarBuilder;
   final Widget Function(BuildContext context, A? item) _descriptionBuilder;
 

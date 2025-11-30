@@ -3,7 +3,7 @@ part of 'bubble_list.dart';
 class BubbleAvatar<A> extends StatelessWidget {
   const BubbleAvatar({
     super.key,
-    required Color Function(BuildContext context, A? item) statusColorBuilder,
+    BoxBorder? Function(BuildContext context, A? item)? statusColorBuilder,
     required Widget Function(BuildContext context, A? item) avatarBuilder,
     required A? item,
     // required int index,
@@ -14,7 +14,7 @@ class BubbleAvatar<A> extends StatelessWidget {
         // _index = index,
         _size = size;
 
-  final Color Function(BuildContext context, A? item) _statusColorBuilder;
+  final BoxBorder? Function(BuildContext context, A? item)? _statusColorBuilder;
   final Widget Function(BuildContext context, A? item) _avatarBuilder;
   final A? _item;
   // final int _index;
@@ -27,8 +27,8 @@ class BubbleAvatar<A> extends StatelessWidget {
       height: _size,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        border:
-            Border.all(color: _statusColorBuilder(context, _item), width: 3),
+        border: _statusColorBuilder?.call(context, _item),
+        //Border.all(color: _statusColorBuilder(context, _item), width: 3),
       ),
       child: ClipOval(child: _avatarBuilder(context, _item)),
     );

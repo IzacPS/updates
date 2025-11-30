@@ -12,7 +12,7 @@ class Updates<A, C> extends StatelessWidget {
     double height = 54,
     EdgeInsetsGeometry? padding,
     required UpdatesController<A> controller,
-    required Color Function(BuildContext context, A? item) statusColorBuilder,
+    BoxBorder? Function(BuildContext context, A? item)? statusColorBuilder,
     required Widget Function(BuildContext context, A? item) avatarBuilder,
     required Widget Function(BuildContext context, A? item) descriptionBuilder,
     required Widget Function(BuildContext, C?) backgroundBuilder,
@@ -33,7 +33,7 @@ class Updates<A, C> extends StatelessWidget {
   final double _height;
   final EdgeInsetsGeometry? _padding;
   final UpdatesController<A> _controller;
-  final Color Function(BuildContext context, A? item) _statusColorBuilder;
+  final BoxBorder? Function(BuildContext context, A? item)? _statusColorBuilder;
   final Widget Function(BuildContext context, A? item) _avatarBuilder;
   final Widget Function(BuildContext context, A? item) _descriptionBuilder;
   final Widget Function(BuildContext, C?) _backgroundBuilder;

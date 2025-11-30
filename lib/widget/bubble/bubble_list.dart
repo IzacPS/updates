@@ -16,7 +16,7 @@ class BubbleList<A, C> extends StatelessWidget {
     required double height,
     EdgeInsetsGeometry? padding,
     required UpdatesController<A> controller,
-    required Color Function(BuildContext context, A? item) statusColorBuilder,
+    BoxBorder? Function(BuildContext context, A? item)? statusColorBuilder,
     required Widget Function(BuildContext context, A? item) avatarBuilder,
     required Widget Function(BuildContext context, A? item) descriptionBuilder,
     required Widget Function(BuildContext, C?) backgroundBuilder,
@@ -40,7 +40,7 @@ class BubbleList<A, C> extends StatelessWidget {
   final double _height;
   final EdgeInsetsGeometry? _padding;
   final UpdatesController<A> _controller;
-  final Color Function(BuildContext context, A? item) _statusColorBuilder;
+  final BoxBorder? Function(BuildContext context, A? item)? _statusColorBuilder;
   final Widget Function(BuildContext context, A? item) _avatarBuilder;
   final Widget Function(BuildContext context, A? item) _descriptionBuilder;
   final Widget Function(BuildContext, C?) _backgroundBuilder;
@@ -54,140 +54,142 @@ class BubbleList<A, C> extends StatelessWidget {
       child: SizedBox(
         height: 148,
         child: PagingListener(
-          controller: _controller,
-          builder: (context, state, fetchNextPage) {
-            return PagedListView<int, A>(
-              state: state,
-              fetchNextPage: fetchNextPage,
-              scrollDirection: Axis.horizontal,
-              padding: _padding,
-              builderDelegate: PagedChildBuilderDelegate(
-                firstPageProgressIndicatorBuilder: (context) {
-                  return Skeletonizer.zone(
-                    enabled: true,
-                    child: Row(
+            controller: _controller,
+            builder: (context, state, fetchNextPage) {
+              return PagedListView<int, A>(
+                state: state,
+                fetchNextPage: fetchNextPage,
+                scrollDirection: Axis.horizontal,
+                padding: _padding,
+                builderDelegate: PagedChildBuilderDelegate(
+                  firstPageProgressIndicatorBuilder: (context) {
+                    return Skeletonizer.zone(
+                      enabled: true,
+                      child: Row(
+                        children: List<Widget>.generate(
+                          8,
+                          (index) => Column(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.all(4.0),
+                                child: Bone.circle(
+                                  size: _size,
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                    left: 4.0, right: 4.0),
+                                child: PreferredSize(
+                                  preferredSize: Size.fromHeight(_height),
+                                  child: Bone.text(words: 1),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                  noItemsFoundIndicatorBuilder: (context) => Center(
+                    child: Text("Sem atualizações"),
+                  ),
+                  //newPageProgressIndicatorBuilder: (context) {
+                  //  return Skeletonizer.zone(
+                  //    enabled: true,
+                  //    child: Row(
+                  //      children: List<Widget>.generate(
+                  //        8,
+                  //        (index) => Column(
+                  //          children: [
+                  //            Padding(
+                  //              padding: const EdgeInsets.all(4.0),
+                  //              child: Bone.circle(
+                  //                size: _size,
+                  //              ),
+                  //            ),
+                  //            Padding(
+                  //              padding: const EdgeInsets.only(left: 4.0, right: 4.0),
+                  //              child: PreferredSize(
+                  //                preferredSize: Size.fromHeight(_height),
+                  //                child: Bone.text(words: 1),
+                  //              ),
+                  //            ),
+                  //          ],
+                  //        ),
+                  //      ),
+                  //    ),
+                  //  );
+                  //},
+                  firstPageErrorIndicatorBuilder: (context) {
+                    return Row(
                       children: List<Widget>.generate(
                         8,
                         (index) => Column(
                           children: [
                             Padding(
                               padding: const EdgeInsets.all(4.0),
-                              child: Bone.circle(
-                                size: _size,
+                              child: Container(
+                                width: _size,
+                                height: _size,
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: Colors.grey[200], // Cor grey[300]
+                                ),
                               ),
                             ),
                             Padding(
-                              padding: const EdgeInsets.only(left: 4.0, right: 4.0),
+                              padding:
+                                  const EdgeInsets.only(left: 4.0, right: 4.0),
                               child: PreferredSize(
                                 preferredSize: Size.fromHeight(_height),
-                                child: Bone.text(words: 1),
+                                child: Container(
+                                  height:
+                                      14, // Ajuste de altura conforme necessário
+                                  width: 70,
+                                  decoration: BoxDecoration(
+                                    color: Colors.grey[200], // Cor grey[300]
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                ),
                               ),
                             ),
                           ],
                         ),
                       ),
-                    ),
-                  );
-                },
-                noItemsFoundIndicatorBuilder: (context) => Center(
-                  child: Text("Sem atualizações"),
+                    );
+                  },
+                  //newPageErrorIndicatorBuilder: (context) {
+                  //  return SizedBox.shrink();
+                  //},
+                  itemBuilder: (context, item, index) {
+                    return Bubble<A>(
+                      index: index,
+                      item: item,
+                      size: _size,
+                      height: _height,
+                      statusColorBuilder: _statusColorBuilder,
+                      avatarBuilder: _avatarBuilder,
+                      descriptionBuilder: _descriptionBuilder,
+                      onTap: (index) {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) {
+                              return AgentList<A, C>(
+                                initialIndex: index,
+                                agentItems: state.items!,
+                                backgroundBuilder: _backgroundBuilder,
+                                foregroundBuilder: _foregroundBuilder,
+                                generateContentData: _generateContentData,
+                              );
+                            },
+                          ),
+                        );
+                      },
+                    );
+                  },
                 ),
-                //newPageProgressIndicatorBuilder: (context) {
-                //  return Skeletonizer.zone(
-                //    enabled: true,
-                //    child: Row(
-                //      children: List<Widget>.generate(
-                //        8,
-                //        (index) => Column(
-                //          children: [
-                //            Padding(
-                //              padding: const EdgeInsets.all(4.0),
-                //              child: Bone.circle(
-                //                size: _size,
-                //              ),
-                //            ),
-                //            Padding(
-                //              padding: const EdgeInsets.only(left: 4.0, right: 4.0),
-                //              child: PreferredSize(
-                //                preferredSize: Size.fromHeight(_height),
-                //                child: Bone.text(words: 1),
-                //              ),
-                //            ),
-                //          ],
-                //        ),
-                //      ),
-                //    ),
-                //  );
-                //},
-                firstPageErrorIndicatorBuilder: (context) {
-                  return Row(
-                    children: List<Widget>.generate(
-                      8,
-                      (index) => Column(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(4.0),
-                            child: Container(
-                              width: _size,
-                              height: _size,
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: Colors.grey[200], // Cor grey[300]
-                              ),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 4.0, right: 4.0),
-                            child: PreferredSize(
-                              preferredSize: Size.fromHeight(_height),
-                              child: Container(
-                                height: 14, // Ajuste de altura conforme necessário
-                                width: 70,
-                                decoration: BoxDecoration(
-                                  color: Colors.grey[200], // Cor grey[300]
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  );
-                },
-                //newPageErrorIndicatorBuilder: (context) {
-                //  return SizedBox.shrink();
-                //},
-                itemBuilder: (context, item, index) {
-                  return Bubble<A>(
-                    index: index,
-                    item: item,
-                    size: _size,
-                    height: _height,
-                    statusColorBuilder: _statusColorBuilder,
-                    avatarBuilder: _avatarBuilder,
-                    descriptionBuilder: _descriptionBuilder,
-                    onTap: (index) {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) {
-                            return AgentList<A, C>(
-                              initialIndex: index,
-                              agentItems: state.items!,
-                              backgroundBuilder: _backgroundBuilder,
-                              foregroundBuilder: _foregroundBuilder,
-                              generateContentData: _generateContentData,
-                            );
-                          },
-                        ),
-                      );
-                    },
-                  );
-                },
-              ),
-            );
-          }
-        ),
+              );
+            }),
       ),
     );
   }

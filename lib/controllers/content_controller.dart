@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 typedef MaxIndexCallback = void Function();
@@ -58,9 +57,7 @@ class ContentController {
       _backgroundController.nextPage(
           duration: Duration(milliseconds: 100), curve: Curves.easeInOut);
       _indicatorNotifier.value = currentIndex + 1;
-    } catch (e) {
-      debugPrint(e.toString());
-    }
+    } catch (_) {}
   }
 
   void previous() {
@@ -75,9 +72,7 @@ class ContentController {
       _backgroundController.previousPage(
           duration: Duration(milliseconds: 100), curve: Curves.easeInOut);
       _indicatorNotifier.value = currentIndex - 1;
-    } catch (e) {
-      debugPrint(e.toString());
-    }
+    } catch (_) {}
   }
 
   void addOnMaxIndexCallback(MaxIndexCallback callback) {

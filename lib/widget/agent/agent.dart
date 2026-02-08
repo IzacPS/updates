@@ -42,8 +42,6 @@ class _AgentState<A, C> extends State<Agent<A, C>> {
   void initState() {
     super.initState();
     _data = widget._generateContentData(widget._items?[widget._agentIndex]);
-    //TODO: verify the size of _data.
-    //Alow zero sized list?
     _contentController = ContentController(numItems: _data.length);
     _contentController.addOnMaxIndexCallback(() {
       widget._agentController.next();

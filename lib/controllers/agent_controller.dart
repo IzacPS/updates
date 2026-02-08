@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 
 typedef MaxIndexCallback = void Function();
@@ -35,9 +34,7 @@ class AgentController extends PageController {
     try {
       nextPage(duration: Duration(milliseconds: 100), curve: Curves.easeInOut);
       _currentIndex = currentIndex + 1;
-    } catch (e) {
-      debugPrint(e.toString());
-    }
+    } catch (_) {}
   }
 
   void previous() {
@@ -52,9 +49,7 @@ class AgentController extends PageController {
       previousPage(
           duration: Duration(milliseconds: 100), curve: Curves.easeInOut);
       _currentIndex = currentIndex - 1;
-    } catch (e) {
-      debugPrint(e.toString());
-    }
+    } catch (_) {}
   }
 
   void addOnMaxIndexCallback(MaxIndexCallback callback) {

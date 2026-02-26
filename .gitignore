@@ -25,6 +25,13 @@ migrate_working_dir/
 docs/
 scripts/
 
+# Documentação gerada por IA / análises locais (não versionar)
+*ANALISE*.md
+*_analysis*.md
+
+# Chaves Firebase Admin SDK (nunca versionar)
+*-firebase-adminsdk-*.json
+
 # Flutter/Dart/Pub related
 # Libraries should not include pubspec.lock, per https://dart.dev/guides/libraries/private-files#pubspeclock.
 /pubspec.lock

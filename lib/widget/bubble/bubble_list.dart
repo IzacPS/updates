@@ -171,7 +171,10 @@ class BubbleList<A, C> extends StatelessWidget {
                       avatarBuilder: _avatarBuilder,
                       descriptionBuilder: _descriptionBuilder,
                       onTap: (index) {
-                        Navigator.of(context).push(
+                        // Usar rootNavigator para que o botão voltar do sistema faça pop desta rota
+                        // em vez de ser interceptado por PopScope da tela principal.
+                        final rootNav = Navigator.of(context, rootNavigator: true);
+                        rootNav.push(
                           MaterialPageRoute(
                             builder: (context) {
                               return AgentList<A, C>(

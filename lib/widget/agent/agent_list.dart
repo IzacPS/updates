@@ -47,21 +47,24 @@ class _AgentListState<A, C> extends State<AgentList<A, C>> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: PageView.builder(
-          controller: _agentController,
-          itemCount: widget._agentItems.length,
-          itemBuilder: (context, index) {
-            return Agent<A, C>(
-              agentIndex: index,
-              items: widget._agentItems,
-              agentController: _agentController,
-              backgroundBuilder: widget._backgroundBuilder,
-              foregroundBuilder: widget._foregroundBuilder,
-              generateContentData: widget._generateContentData,
-            );
-          },
+    return PopScope(
+      canPop: true,
+      child: Scaffold(
+        body: SafeArea(
+          child: PageView.builder(
+            controller: _agentController,
+            itemCount: widget._agentItems.length,
+            itemBuilder: (context, index) {
+              return Agent<A, C>(
+                agentIndex: index,
+                items: widget._agentItems,
+                agentController: _agentController,
+                backgroundBuilder: widget._backgroundBuilder,
+                foregroundBuilder: widget._foregroundBuilder,
+                generateContentData: widget._generateContentData,
+              );
+            },
+          ),
         ),
       ),
     );
